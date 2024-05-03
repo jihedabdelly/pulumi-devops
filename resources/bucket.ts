@@ -1,5 +1,5 @@
-import * as pulumi from "@pulumi/pulumi";
-import * as aws from "@pulumi/aws";
+import { getStack, ComponentResource, ComponentResourceOptions } from "@pulumi/pulumi";
+import { s3 } from "@pulumi/aws";
 
 
 type FmBucketArgs = {
@@ -7,24 +7,24 @@ type FmBucketArgs = {
     Product: string
 }
 
-export default class FmBucket extends pulumi.ComponentResource {
-    constructor(args: FmBucketArgs, opts?: pulumi.ComponentResourceOptions) {
+export default class FmBucket extends ComponentResource {
+    constructor(args: FmBucketArgs, opts?: ComponentResourceOptions) {
         const resourceName = `${args.Product}-${args.Name}`
         super("pkg:index:FmBucket", resourceName, {}, opts);
 
-        const stack = pulumi.getStack();
+        const stack = getStack();
 
         const bucketName = `${resourceName}-${stack}`
 
-        const bucket = new aws.s3.Bucket(args.Name, {
+        const bucket = new s3.Bucket(args.Name, {
             bucket: bucketName,
-            acl: aws.s3.CannedAcl.Private,
+            acl: s3.CannedAcl.Private,
             tags: {
                 Environment: stack,
             },
         });
 
-        new aws.s3.BucketPublicAccessBlock(args.Name, {
+        new s3.BucketPublicAccessBlock(args.Name, {
             bucket: bucket.id,
             blockPublicAcls: true,
             blockPublicPolicy: true,

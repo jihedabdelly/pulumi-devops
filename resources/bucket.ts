@@ -9,15 +9,15 @@ type FmBucketArgs = {
 
 class FmBucket extends pulumi.ComponentResource {
     constructor(args: FmBucketArgs, opts: pulumi.ComponentResourceOptions) {
-        const name = `${args.Product}-${args.Name}`
-        super("pkg:index:FmBucket", name, {}, opts);
+        const resourceName = `${args.Product}-${args.Name}`
+        super("pkg:index:FmBucket", resourceName, {}, opts);
 
-        const b = new aws.s3.Bucket("b", {
-            bucket: "my-tf-test-bucket",
+        const bucket = new aws.s3.Bucket(args.Name, {
+            bucket: resourceName,
             acl: aws.s3.CannedAcl.Private,
             tags: {
-                Name: "My bucket",
                 Environment: "Dev",
+                Name: resourceName,
             },
         });
     }

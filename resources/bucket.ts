@@ -23,6 +23,14 @@ class FmBucket extends pulumi.ComponentResource {
                 Environment: stack,
             },
         });
+
+        new aws.s3.BucketPublicAccessBlock(args.Name, {
+            bucket: bucket.id,
+            blockPublicAcls: true,
+            blockPublicPolicy: true,
+            ignorePublicAcls: true,
+            restrictPublicBuckets: true,
+        });
     }
 
     

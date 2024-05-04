@@ -11,8 +11,15 @@ export default class FmFrontend extends ComponentResource {
         const resourceName = `${args.Product}-${args.Name}`
         super("pkg:index:FmFrontend", resourceName, {}, opts);
 
-        const source = new FmBucket({
+        new FmBucket({
             Name: args.Name,
+            Product: args.Product
+        }, {
+            parent: this
+        });
+
+        new FmBucket({
+            Name: args.Name + "-replica",
             Product: args.Product
         }, {
             parent: this

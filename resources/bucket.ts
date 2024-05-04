@@ -15,15 +15,34 @@ export default class FmBucket extends ComponentResource {
 
         const stack = getStack();
 
-        const bucketName = `${resourceName}-${stack}`
+        const bucketName = `${resourceName}-${stack}`;
 
-        const bucket = new s3.Bucket(args.Name, {
+        let bucketArgs: s3.BucketArgs = {
             bucket: bucketName,
             acl: s3.CannedAcl.Private,
             tags: {
                 Environment: stack,
             },
-        }, {
+        };
+
+        if (args.Public) {
+            bucketArgs.acl = s3.CannedAcl.PublicRead,
+                bucketArgs.website = {
+                    indexDocument: "index.html",
+                    errorDocument: "error.html",
+                    routingRules: `[{
+                        "Condition": {
+                            "KeyPrefixEquals": "docs/"
+                        },
+                        "Redirect": {
+                            "ReplaceKeyPrefixWith": "documents/"
+                        }
+                    }]
+                    `,
+                }
+        }
+
+        const bucket = new s3.Bucket(args.Name, bucketArgs, {
             parent: this
         });
 

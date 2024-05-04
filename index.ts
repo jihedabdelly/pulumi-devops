@@ -1,15 +1,12 @@
-import FmBucket from "./resources/bucket";
+import FmFrontend from "./services/frontend";
 
-const bucketList: string[] = [
-    "example-1",
-    "example-2"
-]
-
-for(const bucket in bucketList) {
-    new FmBucket({
-        Name: bucket,
-        Product: "devops-with-pulumi"
+function main() {
+    new FmFrontend({
+        Name: "exmple-FE",
+        Product: "pulumi-devoops-FE"
     })
 }
+
+main()
 
 

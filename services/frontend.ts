@@ -13,7 +13,8 @@ export default class FmFrontend extends ComponentResource {
 
         new FmBucket({
             Name: args.Name,
-            Product: args.Product
+            Product: args.Product,
+            Public: true // deliberate choice to make the main bucket public
         }, {
             parent: this
         });

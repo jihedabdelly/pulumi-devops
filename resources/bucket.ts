@@ -4,7 +4,8 @@ import { s3 } from "@pulumi/aws";
 
 type FmBucketArgs = {
     Name: string,
-    Product: string
+    Product: string,
+    Public?: boolean,
 }
 
 export default class FmBucket extends ComponentResource {
@@ -26,15 +27,19 @@ export default class FmBucket extends ComponentResource {
             parent: this
         });
 
-        new s3.BucketPublicAccessBlock(args.Name, {
-            bucket: bucket.id,
-            blockPublicAcls: true,
-            blockPublicPolicy: true,
-            ignorePublicAcls: true,
-            restrictPublicBuckets: true,
-        }, {
-            parent: this
-        });
+        if (!args.Public) {
+            new s3.BucketPublicAccessBlock(args.Name, {
+                bucket: bucket.id,
+                blockPublicAcls: true,
+                blockPublicPolicy: true,
+                ignorePublicAcls: true,
+                restrictPublicBuckets: true,
+            }, {
+                parent: this
+            });
+        }
+
+        
     }
 
     

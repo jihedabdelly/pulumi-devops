@@ -22,6 +22,8 @@ export default class FmBucket extends ComponentResource {
             tags: {
                 Environment: stack,
             },
+        }, {
+            parent: this
         });
 
         new s3.BucketPublicAccessBlock(args.Name, {
@@ -30,6 +32,8 @@ export default class FmBucket extends ComponentResource {
             blockPublicPolicy: true,
             ignorePublicAcls: true,
             restrictPublicBuckets: true,
+        }, {
+            parent: this
         });
     }
 

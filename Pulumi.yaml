@@ -1,4 +1,4 @@
-name: intro.DevOpstodevs-codealong
+name: introduction-DevOpstodevs-codealong
 runtime: nodejs
 description: Centralized automation for internal services.
 config:

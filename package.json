@@ -1,5 +1,5 @@
 {
-    "name": "intro.DevOpstodevs-codealong",
+    "name": "introduction-DevOpstodevs-codealong",
     "main": "index.ts",
     "devDependencies": {
         "@types/node": "^18"
